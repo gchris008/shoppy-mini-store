@@ -1,0 +1,9 @@
+{
+  "name": "Shoppy Mini Store",
+  "short_name": "Shoppy",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#50C878",
+  "background_color": "#ffffff",
+  "icons": []
+}
