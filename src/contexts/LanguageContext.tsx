@@ -228,6 +228,7 @@ interface LanguageContextType {
   t: (key: TranslationKey) => string;
 }
 
+// Language context for FR/HT
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
