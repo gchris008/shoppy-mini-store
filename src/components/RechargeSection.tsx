@@ -1,14 +1,28 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Smartphone } from 'lucide-react';
+import { Smartphone, AlertCircle } from 'lucide-react';
 
 const RechargeSection = () => {
   const { t } = useLanguage();
   const [provider, setProvider] = useState<'digicel' | 'natcom'>('digicel');
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
+  const [error, setError] = useState('');
 
-  const amounts = [50, 100, 250, 500, 1000];
+  const amounts = [150, 250, 500, 750, 1000, 2000];
+
+  const numericAmount = Number(amount) || 0;
+  const fee = Math.round(numericAmount * 0.10);
+  const total = numericAmount + fee;
+
+  const handleSubmit = () => {
+    if (numericAmount < 150) {
+      setError(t('rechargeError'));
+      return;
+    }
+    setError('');
+    // Submit logic would go here
+  };
 
   return (
     <section id="recharge" className="py-20 px-4 bg-secondary/30">
@@ -55,24 +69,62 @@ const RechargeSection = () => {
           </div>
 
           {/* Amount */}
-          <label className="block text-sm font-medium text-foreground mb-2">{t('rechargeAmount')} (HTG)</label>
-          <div className="grid grid-cols-5 gap-2 mb-5">
+          <label className="block text-sm font-medium text-foreground mb-2">
+            {t('rechargeAmount')} (HTG)
+            <span className="text-xs text-muted-foreground ml-2">— {t('rechargeMin')}</span>
+          </label>
+          <div className="grid grid-cols-3 gap-2 mb-4">
             {amounts.map((a) => (
               <button
                 key={a}
-                onClick={() => setAmount(String(a))}
-                className={`py-2 rounded-lg text-sm font-medium border transition-all ${
+                onClick={() => { setAmount(String(a)); setError(''); }}
+                className={`py-2.5 rounded-lg text-sm font-medium border transition-all ${
                   amount === String(a)
                     ? 'border-primary bg-primary/10 text-primary'
                     : 'border-border text-muted-foreground hover:border-primary/50'
                 }`}
               >
-                {a}
+                {a} HTG
               </button>
             ))}
           </div>
 
-          <button className="w-full py-3.5 rounded-xl font-semibold gradient-primary text-primary-foreground shadow-emerald hover:shadow-float transition-all hover:-translate-y-0.5">
+          {/* Custom amount */}
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => { setAmount(e.target.value); setError(''); }}
+            placeholder="Autre montant..."
+            min={150}
+            className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all mb-4"
+          />
+
+          {/* Error */}
+          {error && (
+            <div className="flex items-center gap-2 text-destructive text-sm mb-4">
+              <AlertCircle className="w-4 h-4" />
+              {error}
+            </div>
+          )}
+
+          {/* Fee breakdown */}
+          {numericAmount >= 150 && (
+            <div className="text-sm border-t border-border pt-3 mb-4 space-y-1">
+              <div className="flex justify-between text-muted-foreground">
+                <span>{t('rechargeFees')}</span>
+                <span>{fee} HTG</span>
+              </div>
+              <div className="flex justify-between font-semibold text-foreground">
+                <span>{t('rechargeTotal')}</span>
+                <span>{total} HTG</span>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3.5 rounded-xl font-semibold gradient-primary text-primary-foreground shadow-emerald hover:shadow-float transition-all hover:-translate-y-0.5"
+          >
             {t('rechargeSubmit')}
           </button>
         </div>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/hooks/useTheme';
-import { Menu, X, Sun, Moon, Globe, ShoppingBag } from 'lucide-react';
+import { Menu, X, Sun, Moon, Globe, ShoppingBag, Gamepad2 } from 'lucide-react';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -13,6 +13,7 @@ const Navbar = () => {
   const links = [
     { to: '/', label: t('navHome') },
     { to: '/#streaming', label: t('navStreaming') },
+    { to: '/#gaming', label: t('navGaming') },
     { to: '/#cards', label: t('navCards') },
     { to: '/#recharge', label: t('navRecharge') },
     { to: '/#crypto', label: t('navCrypto') },
@@ -34,7 +35,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-5">
           {links.map((link) => (
             <a
               key={link.to}
@@ -52,7 +53,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <button
             onClick={() => setLang(lang === 'fr' ? 'ht' : 'fr')}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
@@ -75,14 +76,14 @@ const Navbar = () => {
         </div>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-foreground">
+        <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-foreground">
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden glass-strong border-t border-border animate-slide-up">
+        <div className="lg:hidden glass-strong border-t border-border animate-slide-up">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
             {links.map((link) => (
               <a

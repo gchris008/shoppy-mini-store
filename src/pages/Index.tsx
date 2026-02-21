@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ServicesOverview from '@/components/ServicesOverview';
 import StreamingSection from '@/components/StreamingSection';
+import GamingSection from '@/components/GamingSection';
 import CardsSection from '@/components/CardsSection';
 import RechargeSection from '@/components/RechargeSection';
 import CryptoSection from '@/components/CryptoSection';
@@ -16,6 +17,7 @@ const Index = () => {
         <HeroSection />
         <ServicesOverview />
         <StreamingSection />
+        <GamingSection />
         <CardsSection />
         <RechargeSection />
         <CryptoSection />
